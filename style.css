@@ -450,6 +450,11 @@ body {
     padding: 3px 1px !important;
     height: 30px !important;
     min-height: 30px !important;
+    max-height: 30px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    line-height: 1.0 !important;
+    white-space: nowrap !important;
 }
 
 .print-preview #scheduleTable td:first-child,
@@ -778,8 +783,15 @@ body {
     #scheduleTable td {
         padding: 2px 1px !important;
         border: 1px solid #333 !important;
+        min-height: 20px !important;
+        max-height: 20px !important;
         height: 20px !important;
         vertical-align: middle;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        line-height: 1.0 !important;
+        font-size: 6px !important;
+        white-space: nowrap !important;
     }
 
     #scheduleTable th {
@@ -853,7 +865,25 @@ body {
         white-space: pre-line !important;
     }
 
+    /* 合并单元格在打印模式下的特殊处理 */
+    .merged-cell {
+        white-space: pre-line !important;
+        overflow: hidden !important;
+        max-height: 40px !important;
+        font-size: 5px !important;
+        line-height: 1.1 !important;
+        text-overflow: ellipsis !important;
+    }
 
+    /* 预览模式下的合并单元格 */
+    .print-preview .merged-cell {
+        white-space: pre-line !important;
+        overflow: hidden !important;
+        max-height: 60px !important;
+        font-size: 7px !important;
+        line-height: 1.1 !important;
+        text-overflow: ellipsis !important;
+    }
 }
 
 /* 响应式设计 */
