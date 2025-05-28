@@ -402,7 +402,7 @@ body {
 .print-preview .header {
     background: white !important;
     color: #333 !important;
-    padding: 8px 0 !important;
+    padding: 20px 5px 5px 5px !important;
     text-align: center;
     border-bottom: 2px solid #333;
     position: relative;
@@ -410,7 +410,16 @@ body {
 
 .print-preview .standard-source {
     color: #666 !important;
-    font-size: 0.6em !important;
+    font-size: 0.7em !important;
+    position: absolute !important;
+    top: 2px !important;
+    left: 5px !important;
+    max-width: 120px !important;
+    max-height: 15px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    line-height: 1.1 !important;
+    white-space: pre-line !important;
 }
 
 .print-preview .header h1 {
@@ -730,7 +739,7 @@ body {
     .header {
         background: white !important;
         color: #333 !important;
-        padding: 5px 0 !important;
+        padding: 20px 5px 5px 5px !important;
         text-align: center;
         border-bottom: 2px solid #333;
         position: relative;
@@ -738,12 +747,16 @@ body {
 
     .standard-source {
         color: #666 !important;
-        font-size: 0.5em !important;
-    }
-
-    .standard-source {
-        color: #666 !important;
-        font-size: 0.5em !important;
+        font-size: 0.7em !important;
+        position: absolute !important;
+        top: 2px !important;
+        left: 5px !important;
+        max-width: 120px !important;
+        max-height: 15px !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        line-height: 1.1 !important;
+        white-space: pre-line !important;
     }
 
     .header h1 {
