@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>嘉航标准作息时间记录表 - 2岁儿童作息记录</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- 头部 -->
+      <div class="header">
+        <span
+          class="standard-source editable-source"
+          contenteditable="true"
+          id="headerScheduleSource"
+          >基于美国睡眠医学会建议</span
+        >
+        <input
+          type="text"
+          id="titleInput"
+          class="title-input"
+          value="嘉航标准作息时间记录表 - 年月"
+          placeholder="输入标题..."
+        />
+      </div>
+
+      <!-- 主要内容 -->
+      <div class="content">
+        <!-- 控制面板 -->
+        <div class="controls">
+          <div class="button-group">
+            <button class="btn btn-primary" id="generateBtn">
+              📋 生成表格
+            </button>
+            <button class="btn btn-secondary" id="saveTableBtn">
+              💾 保存表格
+            </button>
+            <button class="btn btn-info" id="previewBtn">👁️ 预览打印</button>
+            <button class="btn btn-success" id="exportBtn">
+              📄 导出PDF后打印
+            </button>
+          </div>
+          <!-- 表格操作工具 -->
+          <div
+            class="table-tools"
+            id="tableTools"
+            style="display: none; margin-top: 10px"
+          >
+            <div class="button-group">
+              <button class="btn btn-tool" id="mergeCellsBtn" disabled>
+                🔗 合并选中单元格
+              </button>
+              <button class="btn btn-tool" id="unmergeCellsBtn" disabled>
+                ↩️ 取消合并
+              </button>
+              <button class="btn btn-tool" id="clearSelectionBtn" disabled>
+                ❌ 清除选择
+              </button>
+            </div>
+            <div class="selection-info" id="selectionInfo"></div>
+          </div>
+        </div>
+
+        <!-- 保存记录管理 -->
+        <div class="saved-records" id="savedRecords" style="display: none">
+          <h3>📂 已保存的表格记录</h3>
+          <div class="records-list" id="recordsList">
+            <p class="no-records">暂无保存记录</p>
+          </div>
+        </div>
+
+        <!-- 使用说明 -->
+        <div class="instructions">
+          <h3>📋 使用步骤</h3>
+          <ol>
+            <li>编辑顶部标题填入年月信息</li>
+            <li>点击"生成表格"按钮</li>
+            <li>编辑时间、标准作息和日期记录</li>
+            <li>点击"预览打印"查看打印效果</li>
+            <li>点击"导出PDF"保存记录</li>
+          </ol>
+        </div>
+
+        <!-- 标准作息参考 -->
+        <div class="reference-schedule">
+          <h3>
+            🕐 标准作息参考（<span
+              class="editable-source"
+              contenteditable="true"
+              id="scheduleSource"
+              >基于美国睡眠医学会建议</span
+            >）
+          </h3>
+          <div class="schedule-grid">
+            <div class="schedule-item">
+              <div class="schedule-time">06:00</div>
+              <div class="schedule-activity">起床</div>
+            </div>
+            <div class="schedule-item">
+              <div class="schedule-time">07:00</div>
+              <div class="schedule-activity">早餐</div>
+            </div>
+            <div class="schedule-item">
+              <div class="schedule-time">13:00</div>
+              <div class="schedule-activity">午睡开始</div>
+            </div>
+            <div class="schedule-item">
+              <div class="schedule-time">15:00</div>
+              <div class="schedule-activity">午睡结束</div>
+            </div>
+            <div class="schedule-item">
+              <div class="schedule-time">18:00</div>
+              <div class="schedule-activity">晚餐</div>
+            </div>
+            <div class="schedule-item">
+              <div class="schedule-time">20:30</div>
+              <div class="schedule-activity">晚安睡觉</div>
+            </div>
+          </div>
+          <p>
+            <strong>睡眠建议：</strong
+            >1-2岁儿童每天需要11-14小时睡眠（包括小睡）
+          </p>
+        </div>
+
+        <!-- 表格容器 -->
+        <div class="table-container" id="tableContainer">
+          <p>请选择月份并点击"生成表格"开始记录</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 欢迎弹窗 -->
+    <div id="welcomeModal" class="modal-overlay">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>📋 嘉航作息表使用指南</h2>
+          <button class="modal-close" id="closeModal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="guide-item">
+            <div class="guide-icon">✏️</div>
+            <div class="guide-text">
+              <h3>全面可编辑</h3>
+              <p>
+                顶部标题和表格任意部位可点击编辑，包括时间、标准作息、日期记录和底部技巧卡片
+              </p>
+            </div>
+          </div>
+          <div class="guide-item">
+            <div class="guide-icon">🖨️</div>
+            <div class="guide-text">
+              <h3>智能打印</h3>
+              <p>
+                点击"导出PDF后打印"自适应A4纸打印，自动优化布局获得最佳打印效果
+              </p>
+            </div>
+          </div>
+          <div class="guide-item">
+            <div class="guide-icon">💾</div>
+            <div class="guide-text">
+              <h3>自动保存</h3>
+              <p>所有编辑内容都会自动保存到浏览器本地，下次访问时自动恢复</p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" id="startUsingBtn">开始使用</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
