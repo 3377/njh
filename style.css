@@ -415,7 +415,7 @@ body {
     top: 2px !important;
     left: 5px !important;
     max-width: 120px !important;
-    max-height: 15px !important;
+    max-height: 25px !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
     line-height: 1.1 !important;
@@ -752,7 +752,7 @@ body {
         top: 2px !important;
         left: 5px !important;
         max-width: 120px !important;
-        max-height: 15px !important;
+        max-height: 25px !important;
         overflow: hidden !important;
         text-overflow: ellipsis !important;
         line-height: 1.1 !important;

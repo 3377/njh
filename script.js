@@ -1074,10 +1074,14 @@ async function saveCurrentTable() {
         const specialData = JSON.parse(localStorage.getItem('schedule-special') || '{}');
         const tipsData = JSON.parse(localStorage.getItem('schedule-tips') || '{}');
         const scheduleSource = document.getElementById('scheduleSource').textContent;
+        const titleContent = document.getElementById('titleInput').value;
+        const headerSource = document.getElementById('headerScheduleSource').textContent;
         
         const saveData = {
             id: tableId,
             title: defaultTitle,
+            titleContent,
+            headerSource,
             cellData,
             specialData,
             tipsData,
@@ -1215,6 +1219,14 @@ async function loadSavedTable(tableId) {
             // 恢复标准作息来源
             if (tableData.scheduleSource) {
                 document.getElementById('scheduleSource').textContent = tableData.scheduleSource;
+            }
+            
+            // 恢复标题和头部来源信息
+            if (tableData.titleContent) {
+                document.getElementById('titleInput').value = tableData.titleContent;
+            }
+            if (tableData.headerSource) {
+                document.getElementById('headerScheduleSource').textContent = tableData.headerSource;
             }
             
             // 恢复合并单元格信息
