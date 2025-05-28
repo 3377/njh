@@ -393,7 +393,9 @@ body {
 
 .print-preview .controls,
 .print-preview .instructions,
-.print-preview .reference-schedule {
+.print-preview .reference-schedule,
+.print-preview .saved-records,
+.print-preview .table-tools {
     display: none !important;
 }
 
@@ -714,7 +716,9 @@ body {
 
     .controls,
     .instructions,
-    .reference-schedule {
+    .reference-schedule,
+    .saved-records,
+    .table-tools {
         display: none !important;
     }
 
