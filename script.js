@@ -4,26 +4,47 @@
  */
 
 // 2岁儿童标准作息时间表（基于美国睡眠医学会建议）
-const standardSchedule = {
-    '06:00': '起床',
-    '06:30': '晨间护理',
-    '07:00': '早餐',
-    '08:00': '自由活动',
-    '09:30': '户外活动',
-    '10:30': '小食时间',
-    '11:00': '学习游戏',
-    '12:00': '午餐',
-    '13:00': '午睡开始',
-    '15:00': '午睡结束',
-    '15:30': '下午小食',
-    '16:00': '室内活动',
-    '17:00': '户外游戏',
-    '18:00': '晚餐',
-    '19:00': '洗澡时间',
-    '19:30': '安静活动',
-    '20:00': '睡前故事',
-    '20:30': '晚安睡觉'
+// 夏季时间作为基准，冬季时间比夏季时间晚1小时
+const summerSchedule = {
+    '06:00-06:30': '起床',
+    '06:30-07:00': '晨间护理',
+    '07:00-08:00': '早餐',
+    '08:00-09:30': '自由活动',
+    '09:30-10:30': '户外活动',
+    '10:30-11:00': '小食时间',
+    '11:00-12:00': '学习游戏',
+    '12:00-13:00': '午餐',
+    '13:00-15:00': '午睡开始',
+    '15:00-15:30': '午睡结束',
+    '15:30-16:00': '下午小食',
+    '16:00-17:00': '室内活动',
+    '17:00-18:00': '户外游戏',
+    '18:00-19:00': '晚餐',
+    '19:00-19:30': '洗澡时间',
+    '19:30-20:00': '安静活动',
+    '20:00-20:30': '睡前故事',
+    '20:30-21:00': '晚安睡觉'
 };
+
+// 生成冬季时间（比夏季时间晚1小时）
+const winterSchedule = {};
+Object.keys(summerSchedule).forEach(summerTime => {
+    const [startTime, endTime] = summerTime.split('-');
+    const [startHours, startMinutes] = startTime.split(':').map(Number);
+    const [endHours, endMinutes] = endTime.split(':').map(Number);
+    
+    const winterStartHours = (startHours + 1) % 24;
+    const winterEndHours = (endHours + 1) % 24;
+    
+    const winterStartTime = `${String(winterStartHours).padStart(2, '0')}:${String(startMinutes).padStart(2, '0')}`;
+    const winterEndTime = `${String(winterEndHours).padStart(2, '0')}:${String(endMinutes).padStart(2, '0')}`;
+    const winterTime = `${winterStartTime}-${winterEndTime}`;
+    
+    winterSchedule[winterTime] = summerSchedule[summerTime];
+});
+
+// 保持向后兼容性
+const standardSchedule = summerSchedule;
 
 // 全局变量
 let isPreviewMode = false;
@@ -120,26 +141,37 @@ function createScheduleTable(daysInMonth) {
     const thead = document.createElement('thead');
     const headerRow = document.createElement('tr');
     
-    // 时间列表头
-    const timeHeader = document.createElement('th');
-    timeHeader.textContent = '时间';
-    timeHeader.style.width = '35px';
-    timeHeader.style.minWidth = '35px';
-    headerRow.appendChild(timeHeader);
+    // 夏季时间列表头
+    const summerTimeHeader = document.createElement('th');
+    summerTimeHeader.textContent = '夏季时间';
+    summerTimeHeader.style.width = '45px';
+    summerTimeHeader.style.minWidth = '45px';
+    summerTimeHeader.style.textAlign = 'center';
+    summerTimeHeader.style.fontSize = '7px';
+    headerRow.appendChild(summerTimeHeader);
+    
+    // 冬季时间列表头
+    const winterTimeHeader = document.createElement('th');
+    winterTimeHeader.textContent = '冬季时间';
+    winterTimeHeader.style.width = '45px';
+    winterTimeHeader.style.minWidth = '45px';
+    winterTimeHeader.style.textAlign = 'center';
+    winterTimeHeader.style.fontSize = '7px';
+    headerRow.appendChild(winterTimeHeader);
     
     // 标准作息列表头
     const standardHeader = document.createElement('th');
     standardHeader.textContent = '标准作息';
-    standardHeader.style.width = '60px';
-    standardHeader.style.minWidth = '60px';
+    standardHeader.style.width = '50px';
+    standardHeader.style.minWidth = '50px';
     headerRow.appendChild(standardHeader);
     
     // 日期列表头（1-31日，不显示星期）
     for (let day = 1; day <= daysInMonth; day++) {
         const dayHeader = document.createElement('th');
         dayHeader.textContent = day;
-        dayHeader.style.width = '34px';
-        dayHeader.style.minWidth = '30px';
+        dayHeader.style.width = '28px';
+        dayHeader.style.minWidth = '26px';
         headerRow.appendChild(dayHeader);
     }
     
@@ -154,23 +186,23 @@ function createScheduleTable(daysInMonth) {
     times.forEach((time, index) => {
         const row = document.createElement('tr');
         
-        // 时间列（可编辑）
-        const timeCell = document.createElement('td');
-        timeCell.textContent = time;
-        timeCell.contentEditable = true;
-        timeCell.style.fontWeight = 'bold';
-        timeCell.style.backgroundColor = '#e8f5e8';
-        timeCell.style.width = '35px';
-        timeCell.style.minWidth = '35px';
-        timeCell.style.textAlign = 'center';
-        timeCell.style.fontSize = '9px';
-        timeCell.style.cursor = 'text';
-        timeCell.setAttribute('data-type', 'time');
-        timeCell.setAttribute('data-row', index);
-        timeCell.setAttribute('data-cell-id', `time-${index}`);
+        // 夏季时间列（可编辑）
+        const summerTimeCell = document.createElement('td');
+        summerTimeCell.textContent = time;
+        summerTimeCell.contentEditable = true;
+        summerTimeCell.style.fontWeight = 'bold';
+        summerTimeCell.style.backgroundColor = '#e8f5e8';
+        summerTimeCell.style.width = '45px';
+        summerTimeCell.style.minWidth = '45px';
+        summerTimeCell.style.textAlign = 'center';
+        summerTimeCell.style.fontSize = '7px';
+        summerTimeCell.style.cursor = 'text';
+        summerTimeCell.setAttribute('data-type', 'summer-time');
+        summerTimeCell.setAttribute('data-row', index);
+        summerTimeCell.setAttribute('data-cell-id', `summer-time-${index}`);
         
         // 添加单元格选择事件
-        timeCell.addEventListener('mousedown', function(e) {
+        summerTimeCell.addEventListener('mousedown', function(e) {
             if (e.ctrlKey || e.metaKey) {
                 e.preventDefault();
                 toggleCellSelection(this);
@@ -179,29 +211,79 @@ function createScheduleTable(daysInMonth) {
             }
         });
         
-        timeCell.addEventListener('mouseenter', function() {
+        summerTimeCell.addEventListener('mouseenter', function() {
             if (isSelecting) {
                 this.classList.add('cell-selecting');
             }
         });
         
-        timeCell.addEventListener('mouseleave', function() {
+        summerTimeCell.addEventListener('mouseleave', function() {
             this.classList.remove('cell-selecting');
         });
         
         // 添加编辑事件
-        timeCell.addEventListener('focus', function() {
+        summerTimeCell.addEventListener('focus', function() {
             this.style.backgroundColor = '#e3f2fd';
             this.style.outline = '2px solid #2196f3';
         });
         
-        timeCell.addEventListener('blur', function() {
+        summerTimeCell.addEventListener('blur', function() {
             this.style.backgroundColor = '#e8f5e8';
             this.style.outline = 'none';
-            saveSpecialCellData('time', index, this.textContent.trim());
+            saveSpecialCellData('summer-time', index, this.textContent.trim());
         });
         
-        row.appendChild(timeCell);
+        row.appendChild(summerTimeCell);
+        
+        // 冬季时间列（可编辑）
+        const winterTimeCell = document.createElement('td');
+        const winterTime = Object.keys(winterSchedule)[index];
+        winterTimeCell.textContent = winterTime;
+        winterTimeCell.contentEditable = true;
+        winterTimeCell.style.fontWeight = 'bold';
+        winterTimeCell.style.backgroundColor = '#f3e5f5';
+        winterTimeCell.style.width = '45px';
+        winterTimeCell.style.minWidth = '45px';
+        winterTimeCell.style.textAlign = 'center';
+        winterTimeCell.style.fontSize = '7px';
+        winterTimeCell.style.cursor = 'text';
+        winterTimeCell.setAttribute('data-type', 'winter-time');
+        winterTimeCell.setAttribute('data-row', index);
+        winterTimeCell.setAttribute('data-cell-id', `winter-time-${index}`);
+        
+        // 添加单元格选择事件
+        winterTimeCell.addEventListener('mousedown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                e.preventDefault();
+                toggleCellSelection(this);
+            } else {
+                // 正常编辑模式
+            }
+        });
+        
+        winterTimeCell.addEventListener('mouseenter', function() {
+            if (isSelecting) {
+                this.classList.add('cell-selecting');
+            }
+        });
+        
+        winterTimeCell.addEventListener('mouseleave', function() {
+            this.classList.remove('cell-selecting');
+        });
+        
+        // 添加编辑事件
+        winterTimeCell.addEventListener('focus', function() {
+            this.style.backgroundColor = '#e3f2fd';
+            this.style.outline = '2px solid #2196f3';
+        });
+        
+        winterTimeCell.addEventListener('blur', function() {
+            this.style.backgroundColor = '#f3e5f5';
+            this.style.outline = 'none';
+            saveSpecialCellData('winter-time', index, this.textContent.trim());
+        });
+        
+        row.appendChild(winterTimeCell);
         
         // 标准作息列（可编辑）
         const standardCell = document.createElement('td');
@@ -209,8 +291,8 @@ function createScheduleTable(daysInMonth) {
         standardCell.contentEditable = true;
         standardCell.style.fontSize = '9px';
         standardCell.style.backgroundColor = '#fff8e1';
-        standardCell.style.width = '60px';
-        standardCell.style.minWidth = '60px';
+        standardCell.style.width = '50px';
+        standardCell.style.minWidth = '50px';
         standardCell.style.padding = '2px';
         standardCell.style.textAlign = 'center';
         standardCell.style.lineHeight = '1.1';
@@ -267,8 +349,8 @@ function createScheduleTable(daysInMonth) {
             dayCell.style.wordWrap = 'break-word';
             dayCell.style.overflow = 'hidden';
             dayCell.style.verticalAlign = 'top';
-            dayCell.style.width = '34px';
-            dayCell.style.minWidth = '30px';
+            dayCell.style.width = '28px';
+            dayCell.style.minWidth = '26px';
             dayCell.contentEditable = true; // 可编辑
             dayCell.style.cursor = 'text';
             dayCell.setAttribute('data-day', day);
@@ -471,12 +553,22 @@ function restoreTableData() {
     // 恢复特殊列数据
     const specialData = JSON.parse(localStorage.getItem('schedule-special') || '{}');
     
-    // 恢复时间列
-    if (specialData.time) {
-        Object.keys(specialData.time).forEach(row => {
-            const cell = document.querySelector(`[data-type="time"][data-row="${row}"]`);
+    // 恢复夏季时间列
+    if (specialData['summer-time']) {
+        Object.keys(specialData['summer-time']).forEach(row => {
+            const cell = document.querySelector(`[data-type="summer-time"][data-row="${row}"]`);
             if (cell) {
-                cell.textContent = specialData.time[row];
+                cell.textContent = specialData['summer-time'][row];
+            }
+        });
+    }
+    
+    // 恢复冬季时间列
+    if (specialData['winter-time']) {
+        Object.keys(specialData['winter-time']).forEach(row => {
+            const cell = document.querySelector(`[data-type="winter-time"][data-row="${row}"]`);
+            if (cell) {
+                cell.textContent = specialData['winter-time'][row];
             }
         });
     }
@@ -733,7 +825,7 @@ function showWelcomeModal() {
             console.error('❌ 欢迎弹窗元素未找到');
         }
     } else {
-        console.log('👋 用户已看过欢迎提示');
+        console.log('🎉 用户已看过欢迎提示');
     }
 }
 
@@ -886,14 +978,16 @@ function mergeCells() {
         let col = 0;
         
         const cellId = cell.getAttribute('data-cell-id');
-        if (cellId.startsWith('time-')) {
-            col = 0; // 时间列
+        if (cellId.startsWith('summer-time-')) {
+            col = 0; // 夏季时间列
+        } else if (cellId.startsWith('winter-time-')) {
+            col = 1; // 冬季时间列
         } else if (cellId.startsWith('standard-')) {
-            col = 1; // 标准作息列
+            col = 2; // 标准作息列
         } else {
             // 日期列
             const day = parseInt(cell.getAttribute('data-day'));
-            col = day + 1; // 日期列从第3列开始
+            col = day + 2; // 日期列从第4列开始
         }
         
         return { cell, row, col, cellId };
@@ -917,11 +1011,13 @@ function mergeCells() {
         for (let col = minCol; col <= maxCol; col++) {
             let expectedCellId;
             if (col === 0) {
-                expectedCellId = `time-${row}`;
+                expectedCellId = `summer-time-${row}`;
             } else if (col === 1) {
+                expectedCellId = `winter-time-${row}`;
+            } else if (col === 2) {
                 expectedCellId = `standard-${row}`;
             } else {
-                expectedCellId = `${row}-${col - 1}`;
+                expectedCellId = `${row}-${col - 2}`;
             }
             
             const found = cellPositions.some(p => p.cellId === expectedCellId);

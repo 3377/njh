@@ -57,14 +57,14 @@ body {
     font-family: 'Microsoft YaHei', 'SimSun', sans-serif;
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     min-height: 100vh;
-    padding: 10px;
+    padding: 5px;
     line-height: 1.6;
     margin: 0;
 }
 
 /* 主容器 */
 .container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     background: white;
     border-radius: 15px;
@@ -89,6 +89,10 @@ body {
     opacity: 0.8;
     color: white;
     font-weight: normal;
+    line-height: 1.2;
+    max-width: 120px;
+    text-align: left;
+    white-space: pre-line;
 }
 
 .header h1 {
@@ -351,34 +355,46 @@ body {
     background-color: #e3f2fd;
 }
 
-/* 第一列（时间）特殊样式 */
+/* 第一列（夏季时间）特殊样式 */
 #scheduleTable td:first-child,
 #scheduleTable th:first-child {
     background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
     color: white;
     font-weight: bold;
-    width: 35px;
-    min-width: 35px;
-    font-size: 9px;
+    width: 45px;
+    min-width: 45px;
+    font-size: 7px;
 }
 
-/* 第二列（标准作息）特殊样式 */
+/* 第二列（冬季时间）特殊样式 */
 #scheduleTable td:nth-child(2),
 #scheduleTable th:nth-child(2) {
+    background: linear-gradient(135deg, #9c27b0 0%, #673ab7 100%);
+    color: white;
+    font-weight: bold;
+    width: 45px;
+    min-width: 45px;
+    font-size: 7px;
+    text-align: center;
+}
+
+/* 第三列（标准作息）特殊样式 */
+#scheduleTable td:nth-child(3),
+#scheduleTable th:nth-child(3) {
     background: #fff3e0 !important;
     color: #e65100 !important;
     font-weight: bold;
-    font-size: 9px;
-    width: 60px;
-    min-width: 60px;
+    font-size: 8px;
+    width: 50px;
+    min-width: 50px;
     text-align: center !important;
 }
 
 /* 日期列样式 */
-#scheduleTable td:nth-child(n+3),
-#scheduleTable th:nth-child(n+3) {
-    width: 34px;
-    min-width: 30px;
+#scheduleTable td:nth-child(n+4),
+#scheduleTable th:nth-child(n+4) {
+    width: 28px;
+    min-width: 26px;
     font-size: 10px;
 }
 
@@ -420,6 +436,7 @@ body {
     text-overflow: ellipsis !important;
     line-height: 1.1 !important;
     white-space: pre-line !important;
+    text-align: left !important;
 }
 
 .print-preview .header h1 {
@@ -468,21 +485,28 @@ body {
 
 .print-preview #scheduleTable td:first-child,
 .print-preview #scheduleTable th:first-child {
-    width: 30px !important;
+    width: 35px !important;
     font-size: 6px !important;
 }
 
 .print-preview #scheduleTable td:nth-child(2),
 .print-preview #scheduleTable th:nth-child(2) {
-    width: 50px !important;
+    width: 35px !important;
     font-size: 6px !important;
     text-align: center !important;
 }
 
-.print-preview #scheduleTable td:nth-child(n+3),
-.print-preview #scheduleTable th:nth-child(n+3) {
-    width: 26px !important;
-    min-width: 24px !important;
+.print-preview #scheduleTable td:nth-child(3),
+.print-preview #scheduleTable th:nth-child(3) {
+    width: 40px !important;
+    font-size: 6px !important;
+    text-align: center !important;
+}
+
+.print-preview #scheduleTable td:nth-child(n+4),
+.print-preview #scheduleTable th:nth-child(n+4) {
+    width: 22px !important;
+    min-width: 20px !important;
     font-size: 7px !important;
 }
 
@@ -757,6 +781,7 @@ body {
         text-overflow: ellipsis !important;
         line-height: 1.1 !important;
         white-space: pre-line !important;
+        text-align: left !important;
     }
 
     .header h1 {
@@ -817,23 +842,32 @@ body {
     #scheduleTable th:first-child {
         background: #f0f0f0 !important;
         color: #333 !important;
-        width: 25px !important;
+        width: 30px !important;
         font-size: 5px !important;
     }
 
     #scheduleTable td:nth-child(2),
     #scheduleTable th:nth-child(2) {
-        background: #f8f8f8 !important;
+        background: #f0f0f0 !important;
         color: #333 !important;
-        width: 50px !important;
+        width: 30px !important;
         font-size: 5px !important;
         text-align: center !important;
     }
 
-    #scheduleTable td:nth-child(n+3),
-    #scheduleTable th:nth-child(n+3) {
-        width: calc((100% - 75px) / 31) !important;
-        min-width: 20px !important;
+    #scheduleTable td:nth-child(3),
+    #scheduleTable th:nth-child(3) {
+        background: #f8f8f8 !important;
+        color: #333 !important;
+        width: 35px !important;
+        font-size: 5px !important;
+        text-align: center !important;
+    }
+
+    #scheduleTable td:nth-child(n+4),
+    #scheduleTable th:nth-child(n+4) {
+        width: calc((100% - 95px) / 31) !important;
+        min-width: 16px !important;
         font-size: 6px !important;
     }
 
@@ -1011,7 +1045,7 @@ body {
 
     #scheduleTable {
         font-size: 11px;
-        min-width: 800px;
+        min-width: 1000px;
         /* 确保表格有足够宽度 */
     }
 
@@ -1028,6 +1062,36 @@ body {
         z-index: 10;
         position: relative;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    /* 第一列和第二列在小屏幕上的特殊处理 */
+    #scheduleTable td:first-child,
+    #scheduleTable th:first-child {
+        font-size: 7px;
+        width: 35px;
+        min-width: 35px;
+    }
+
+    #scheduleTable td:nth-child(2),
+    #scheduleTable th:nth-child(2) {
+        font-size: 7px;
+        width: 35px;
+        min-width: 35px;
+    }
+
+    #scheduleTable td:nth-child(3),
+    #scheduleTable th:nth-child(3) {
+        font-size: 7px;
+        width: 40px;
+        min-width: 40px;
+    }
+
+    /* 日期列在小屏幕上的优化 */
+    #scheduleTable td:nth-child(n+4),
+    #scheduleTable th:nth-child(n+4) {
+        width: 24px;
+        min-width: 22px;
+        font-size: 8px;
     }
 
     .tips-grid {
@@ -1151,24 +1215,31 @@ body {
     /* 第一列和第二列在小屏幕上的特殊处理 */
     #scheduleTable td:first-child,
     #scheduleTable th:first-child {
-        font-size: 8px;
-        width: 30px;
-        min-width: 30px;
+        font-size: 7px;
+        width: 35px;
+        min-width: 35px;
     }
 
     #scheduleTable td:nth-child(2),
     #scheduleTable th:nth-child(2) {
-        font-size: 8px;
-        width: 50px;
-        min-width: 50px;
+        font-size: 7px;
+        width: 35px;
+        min-width: 35px;
+    }
+
+    #scheduleTable td:nth-child(3),
+    #scheduleTable th:nth-child(3) {
+        font-size: 7px;
+        width: 40px;
+        min-width: 40px;
     }
 
     /* 日期列在小屏幕上的优化 */
-    #scheduleTable td:nth-child(n+3),
-    #scheduleTable th:nth-child(n+3) {
-        width: 30px;
-        min-width: 28px;
-        font-size: 9px;
+    #scheduleTable td:nth-child(n+4),
+    #scheduleTable th:nth-child(n+4) {
+        width: 24px;
+        min-width: 22px;
+        font-size: 8px;
     }
 
     .parenting-tips {
@@ -1220,7 +1291,7 @@ body {
 
     #scheduleTable {
         font-size: 9px;
-        min-width: 750px;
+        min-width: 950px;
         /* 在最小屏幕上仍保持表格可用性 */
     }
 
@@ -1234,21 +1305,28 @@ body {
     #scheduleTable td:first-child,
     #scheduleTable th:first-child {
         font-size: 7px;
-        width: 28px;
-        min-width: 28px;
+        width: 35px;
+        min-width: 35px;
     }
 
     #scheduleTable td:nth-child(2),
     #scheduleTable th:nth-child(2) {
         font-size: 7px;
-        width: 45px;
-        min-width: 45px;
+        width: 35px;
+        min-width: 35px;
     }
 
-    #scheduleTable td:nth-child(n+3),
-    #scheduleTable th:nth-child(n+3) {
-        width: 28px;
-        min-width: 26px;
+    #scheduleTable td:nth-child(3),
+    #scheduleTable th:nth-child(3) {
+        font-size: 7px;
+        width: 40px;
+        min-width: 40px;
+    }
+
+    #scheduleTable td:nth-child(n+4),
+    #scheduleTable th:nth-child(n+4) {
+        width: 24px;
+        min-width: 22px;
         font-size: 8px;
     }
 
@@ -1279,7 +1357,8 @@ body {
 
     /* 时间和标准作息列的触摸优化 */
     #scheduleTable td:first-child,
-    #scheduleTable td:nth-child(2) {
+    #scheduleTable td:nth-child(2),
+    #scheduleTable td:nth-child(3) {
         min-height: 45px;
     }
 
